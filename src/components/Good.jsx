@@ -1,6 +1,6 @@
 function Good({ id, img, name, description, price, handleAddOrder = Function.prototype }) {
 	return (
-		<li className="card" id={id}>
+		<li className="card">
 			<div className="card-image">
 				<img src={img.full_background} alt={name} />
 			</div>
