@@ -37,6 +37,10 @@ function Shop() {
 		}
 	}
 
+	function handleRemoveOrder(id) {
+		setOrder(order.filter((good) => good.id !== id));
+	}
+
 	function handleBasketShow() {
 		setBasketShow(!isBasketShow);
 	}
@@ -62,7 +66,13 @@ function Shop() {
 		<main className="container content">
 			<Basket quantity={order.length} handleBasketShow={handleBasketShow} />
 			{isLoad ? <Goods goods={goods} handleAddOrder={handleAddOrder} /> : <Preloader />}
-			{isBasketShow ? <BasketList order={order} handleBasketShow={handleBasketShow} /> : null}
+			{isBasketShow ? (
+				<BasketList
+					order={order}
+					handleBasketShow={handleBasketShow}
+					handleRemoveOrder={handleRemoveOrder}
+				/>
+			) : null}
 		</main>
 	);
 }
