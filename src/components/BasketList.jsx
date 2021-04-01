@@ -4,6 +4,8 @@ function BasketList({
 	order = [],
 	handleBasketShow = Function.prototype,
 	handleRemoveOrder = Function.prototype,
+	incrementQuantity = Function.prototype,
+	decrementQuantity = Function.prototype,
 }) {
 	const totalPrice = order.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -12,7 +14,13 @@ function BasketList({
 			<li className="collection-item active">Корзина</li>
 			{order.length ? (
 				order.map((item) => (
-					<BasketItem key={item.id} {...item} handleRemoveOrder={handleRemoveOrder} />
+					<BasketItem
+						key={item.id}
+						{...item}
+						handleRemoveOrder={handleRemoveOrder}
+						incrementQuantity={incrementQuantity}
+						decrementQuantity={decrementQuantity}
+					/>
 				))
 			) : (
 				<li className="collection-item">Корзина пуста</li>

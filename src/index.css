@@ -118,3 +118,11 @@ nav .brand-logo {
 		opacity: 1;
 	}
 }
+
+.basket-quantity__basket {
+	margin: 0 5px;
+	vertical-align: middle;
+	color: #26a69a;
+	border-radius: 50%;
+	cursor: pointer;
+}

@@ -45,13 +45,48 @@ function Shop() {
 		setBasketShow(!isBasketShow);
 	}
 
+	function incrementQuantity(id) {
+		const newOrder = order.map((good) => {
+			if (good.id === id) {
+				return {
+					...good,
+					quantity: good.quantity + 1,
+				};
+			} else {
+				return good;
+			}
+		});
+
+		setOrder(newOrder);
+	}
+
+	function decrementQuantity(id) {
+		const newOrder = order.map((good) => {
+			if (good.id === id && good.quantity > 1) {
+				return {
+					...good,
+					quantity: good.quantity - 1,
+				};
+			} else {
+				return good;
+			}
+		});
+
+		setOrder(newOrder);
+	}
+
 	useEffect(() => {
 		fetch(API_URL, {
 			headers: {
 				Authorization: API_KEY,
 			},
 		})
-			.then((response) => response.json())
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Could not fetch ${API_URL}, received ${response.status}`);
+				}
+				return response.json();
+			})
 			.then((data) => {
 				data.shop && setGoods(data.shop);
 				setLoad(true);
@@ -71,6 +106,8 @@ function Shop() {
 					order={order}
 					handleBasketShow={handleBasketShow}
 					handleRemoveOrder={handleRemoveOrder}
+					incrementQuantity={incrementQuantity}
+					decrementQuantity={decrementQuantity}
 				/>
 			) : null}
 		</main>
