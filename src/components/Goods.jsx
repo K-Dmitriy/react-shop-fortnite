@@ -1,6 +1,6 @@
 import Good from "./Good";
 
-function Goods({ goods = [] }) {
+function Goods({ goods = [], handleAddOrder = Function.prototype }) {
 	if (!goods.length) {
 		return <h2>Нет данных</h2>;
 	}
@@ -11,10 +11,12 @@ function Goods({ goods = [] }) {
 				return (
 					<Good
 						key={mainId}
+						id={mainId}
 						name={displayName}
 						description={displayDescription}
 						price={price.finalPrice}
 						img={granted[0].images}
+						handleAddOrder={handleAddOrder}
 					/>
 				);
 			})}

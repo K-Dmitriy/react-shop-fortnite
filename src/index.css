@@ -41,3 +41,39 @@ nav .brand-logo {
 .card-price {
 	font-size: 1.6rem;
 }
+
+.basket {
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	cursor: pointer;
+	z-index: 5;
+	padding: 1rem;
+
+	border-radius: 5px;
+}
+@media (min-width: 767px) {
+	.basket {
+		top: 5rem;
+		bottom: unset;
+	}
+}
+
+.basket-quantity {
+	position: absolute;
+	right: -10px;
+	bottom: -10px;
+
+	display: flex;
+	width: 25px;
+	height: 25px;
+	justify-content: center;
+	align-items: center;
+
+	border-radius: 50%;
+}

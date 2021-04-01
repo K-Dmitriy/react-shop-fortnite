@@ -1,6 +1,6 @@
-function Good({ img, name, description, price }) {
+function Good({ id, img, name, description, price, handleAddOrder = Function.prototype }) {
 	return (
-		<li className="card">
+		<li className="card" id={id}>
 			<div className="card-image">
 				<img src={img.full_background} alt={name} />
 			</div>
@@ -9,7 +9,11 @@ function Good({ img, name, description, price }) {
 				<p>{description}</p>
 			</div>
 			<div className="card-action">
-				<button className="waves-effect waves-light btn" type="button">
+				<button
+					className="waves-effect waves-light btn"
+					type="button"
+					onClick={() => handleAddOrder({ id, name, price })}
+				>
 					Купить
 				</button>
 				<span className="right card-price">{price} руб</span>
