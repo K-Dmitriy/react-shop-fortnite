@@ -1,4 +1,4 @@
-import { BasketItem } from "./BasketItem";
+import BasketItem from "./BasketItem";
 
 function BasketList({
 	order = [],
@@ -36,4 +36,4 @@ function BasketList({
 	);
 }
 
-export { BasketList };
+export default BasketList;

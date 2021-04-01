@@ -3,13 +3,15 @@ import Goods from "./Goods";
 import Preloader from "./Preloader";
 import { API_KEY, API_URL } from "../config";
 import Basket from "./Basket";
-import { BasketList } from "./BasketList";
+import BasketList from "./BasketList";
+import Alert from "./Alert";
 
 function Shop() {
 	const [goods, setGoods] = useState([]);
 	const [isLoad, setLoad] = useState(false);
 	const [order, setOrder] = useState([]);
 	const [isBasketShow, setBasketShow] = useState(false);
+	const [alertName, setAlertName] = useState("");
 
 	function handleAddOrder(item) {
 		const goodIndex = order.findIndex((good) => good.id === item.id);
@@ -35,6 +37,8 @@ function Shop() {
 
 			setOrder(newOrder);
 		}
+
+		setAlertName(item.name);
 	}
 
 	function handleRemoveOrder(id) {
@@ -75,6 +79,10 @@ function Shop() {
 		setOrder(newOrder);
 	}
 
+	function closeAlert() {
+		setAlertName("");
+	}
+
 	useEffect(() => {
 		fetch(API_URL, {
 			headers: {
@@ -110,6 +118,7 @@ function Shop() {
 					decrementQuantity={decrementQuantity}
 				/>
 			) : null}
+			{alertName && <Alert name={alertName} closeAlert={closeAlert} />}
 		</main>
 	);
 }

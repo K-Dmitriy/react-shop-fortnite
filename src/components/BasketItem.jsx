@@ -31,4 +31,4 @@ function BasketItem({
 	);
 }
 
-export { BasketItem };
+export default BasketItem;
