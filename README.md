@@ -1,5 +1,9 @@
 # react-shop-fortnite
 
+## Deployment
+
+https://k-dmitriy.github.io/react-shop-fortnite/
+
 ## Available Scripts
 
 ### `npm install`
