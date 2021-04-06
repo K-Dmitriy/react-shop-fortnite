@@ -1,4 +1,9 @@
-function Good({ id, img, name, description, price, handleAddOrder = Function.prototype }) {
+import { useContext } from "react";
+import { ShopContext } from "../context";
+
+function Good({ id, img, name, description, price }) {
+	const { handleAddOrder } = useContext(ShopContext);
+
 	return (
 		<li className="card">
 			<div className="card-image">

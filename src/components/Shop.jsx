@@ -1,87 +1,15 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { ShopContext } from "../context";
+import { API_KEY, API_URL } from "../config";
+
 import Goods from "./Goods";
 import Preloader from "./Preloader";
-import { API_KEY, API_URL } from "../config";
 import Basket from "./Basket";
 import BasketList from "./BasketList";
 import Alert from "./Alert";
 
 function Shop() {
-	const [goods, setGoods] = useState([]);
-	const [isLoad, setLoad] = useState(false);
-	const [order, setOrder] = useState([]);
-	const [isBasketShow, setBasketShow] = useState(false);
-	const [alertName, setAlertName] = useState("");
-
-	function handleAddOrder(item) {
-		const goodIndex = order.findIndex((good) => good.id === item.id);
-
-		if (goodIndex < 0) {
-			const newItem = {
-				...item,
-				quantity: 1,
-			};
-
-			setOrder([...order, newItem]);
-		} else {
-			const newOrder = order.map((good, index) => {
-				if (index === goodIndex) {
-					return {
-						...good,
-						quantity: good.quantity + 1,
-					};
-				} else {
-					return good;
-				}
-			});
-
-			setOrder(newOrder);
-		}
-
-		setAlertName(item.name);
-	}
-
-	function handleRemoveOrder(id) {
-		setOrder(order.filter((good) => good.id !== id));
-	}
-
-	function handleBasketShow() {
-		setBasketShow(!isBasketShow);
-	}
-
-	function incrementQuantity(id) {
-		const newOrder = order.map((good) => {
-			if (good.id === id) {
-				return {
-					...good,
-					quantity: good.quantity + 1,
-				};
-			} else {
-				return good;
-			}
-		});
-
-		setOrder(newOrder);
-	}
-
-	function decrementQuantity(id) {
-		const newOrder = order.map((good) => {
-			if (good.id === id && good.quantity > 1) {
-				return {
-					...good,
-					quantity: good.quantity - 1,
-				};
-			} else {
-				return good;
-			}
-		});
-
-		setOrder(newOrder);
-	}
-
-	function closeAlert() {
-		setAlertName("");
-	}
+	const { isLoad, isBasketShow, alertName, getData, getDataError } = useContext(ShopContext);
 
 	useEffect(() => {
 		fetch(API_URL, {
@@ -95,30 +23,17 @@ function Shop() {
 				}
 				return response.json();
 			})
-			.then((data) => {
-				data.shop && setGoods(data.shop);
-				setLoad(true);
-			})
-			.catch((err) => {
-				console.error(err);
-				setLoad(true);
-			});
+			.then((data) => getData(data))
+			.catch((error) => getDataError(error));
+		// eslint-disable-next-line
 	}, []);
 
 	return (
 		<main className="container content">
-			<Basket quantity={order.length} handleBasketShow={handleBasketShow} />
-			{isLoad ? <Goods goods={goods} handleAddOrder={handleAddOrder} /> : <Preloader />}
-			{isBasketShow ? (
-				<BasketList
-					order={order}
-					handleBasketShow={handleBasketShow}
-					handleRemoveOrder={handleRemoveOrder}
-					incrementQuantity={incrementQuantity}
-					decrementQuantity={decrementQuantity}
-				/>
-			) : null}
-			{alertName && <Alert name={alertName} closeAlert={closeAlert} />}
+			<Basket />
+			{isLoad ? <Goods /> : <Preloader />}
+			{isBasketShow && <BasketList />}
+			{alertName && <Alert />}
 		</main>
 	);
 }

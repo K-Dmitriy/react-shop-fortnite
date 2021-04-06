@@ -1,12 +1,9 @@
-function BasketItem({
-	id,
-	name,
-	quantity,
-	price,
-	handleRemoveOrder = Function.prototype,
-	incrementQuantity = Function.prototype,
-	decrementQuantity = Function.prototype,
-}) {
+import { useContext } from "react";
+import { ShopContext } from "../context";
+
+function BasketItem({ id, name, quantity, price }) {
+	const { handleRemoveOrder, incrementQuantity, decrementQuantity } = useContext(ShopContext);
+
 	return (
 		<li className="collection-item">
 			{name} x{" "}

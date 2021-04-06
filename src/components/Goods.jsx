@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import { ShopContext } from "../context";
+
 import Good from "./Good";
 
-function Goods({ goods = [], handleAddOrder = Function.prototype }) {
+function Goods() {
+	const { goods = [] } = useContext(ShopContext);
+
 	if (!goods.length) {
 		return <h2>Нет данных</h2>;
 	}
@@ -16,7 +21,6 @@ function Goods({ goods = [], handleAddOrder = Function.prototype }) {
 						description={displayDescription}
 						price={price.finalPrice}
 						img={granted[0].images}
-						handleAddOrder={handleAddOrder}
 					/>
 				);
 			})}
